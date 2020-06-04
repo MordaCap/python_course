@@ -1,0 +1,32 @@
+'''
+E - dict(<V> : [<V>, <V>, ...])
+Ключ - строка, идентифицирующая вершину графа
+значение - список вершин, достижимых из данной
+'''
+
+
+class Graph:
+	def __init__(self, E):
+		self.E = E
+
+		
+'''
+Реализовать итератор, совершающий обход данного графа в ширину
+'''
+class GraphIterator:
+	def __init__(self, graph, start_v):
+		self.graph = graph
+		self.start_v = start_v
+	
+	def hasNext() -> bool:
+		pass
+	
+	def next() -> str:
+		pass
+
+Пример входных данных
+	E = {"A": ["B", "C"], "B": ["A", "C", "D", "E"], "C": ["A", "B", "E"], "D": ["B"], "E": ["B", "C"]}
+	start_v = "A"
+
+Гарантируется, что start_v является ключом в E
+

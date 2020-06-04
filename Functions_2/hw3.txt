@@ -1,0 +1,8 @@
+Написать функцию для поиска количества точек с целочисленными координатами внутри треугольника.
+
+https://upload.wikimedia.org/wikipedia/commons/f/f1/Pick-theorem.png
+
+>>> count_points((0,0),(1,0),(0,1))
+3
+>>> count_points((0,0),(2,0),(0,2))
+6

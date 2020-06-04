@@ -1,0 +1,7 @@
+ѕоставить Python 3 (https://www.python.org/downloads/)
+
+¬ыбрать редактор/IDE и установить (PyCharm, Sublime Text, Atom - что хотите)
+
+ѕоставить себе git (https://git-scm.com/downloads)
+
+—оздать открытый дл€ всех репозиторий (если у вас такой уже есть Ц замечательно )

@@ -1,0 +1,34 @@
+Написать функцию, которая проверяет, содержатся ли в указанной директории hardlink-и, т.е. есть ли в указанной директории файлы, у которых совпадает inode
+
+Гарантируется, что в качестве аргумента функции выступает строка.
+
+В идеале функция должна быть устройчивой к различным исключениям, которые могут возникнуть при работе с FS
+В случае плохого аргумента или возникновения какого-либо исключения - функция должна вернуть False
+
+def hardlink_check(directory_path: str) -> bool:
+	pass
+
+Пример работы:
+
+/testfile1
+/dir1/
+/dir1/testfile2
+/dir1/testfile3
+/dir2
+/dir2/testfile4
+/dir2/testfile5
+/dir3/testfile6
+/dir3/testfile7
+
+Где testfile* - файлы, dir* - папки
+
+Пусть inode(testfile1) == inode(testfile2); inode(testfile6) == inode(testfile7)
+
+Тогда верны утверждения
+
+hardlink_check("/dir1") == False
+hardlink_check("/dir2") == False
+hardlink_check("/dir3") == True
+hardlink_check("") == False
+hardlink_check("/foo/bar") == False
+

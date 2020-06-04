@@ -1,0 +1,58 @@
+# hw1
+
+'''
+Нужно написать декоратор, который завернёт функцию в контекст менеджер.
+Контекст менеджер должен пененаправлять stderr в указанный файл.
+Если dest is None, то перенаправление осуществляется в stdout, иначе dest - строка,
+    сожержащая путь до файла, куда осуществляется перенаправление
+'''
+@stderr_redirect(dest=None)
+def test():
+    pass
+
+
+# hw2
+
+'''
+Нужно реализовать контекстный менеджер pidfile
+Данный декоратор должен не позволять запускать параллельно больше одного блока кода,
+    завёрнутого в данный декоратор
+
+Проверяться декоратор будет так
+# Console1
+python - <<EOF
+from hw_exceptions import pidfile
+import time
+
+with pidfile('file1'):
+    time.sleep(60)
+
+EOF
+
+# Console 2 in same folder
+python - <<EOF
+from hw_exceptions import pidfile
+import time
+
+with pidfile('file1'):
+    time.sleep(60)
+
+EOF
+# expects some kind of Exception here
+'''
+
+class pidfile:
+    def __init__(self, file_name: str):
+        pass
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, *exc_info):
+        pass
+
+
+with pidfile(filename):
+    pass
+    # do something
+

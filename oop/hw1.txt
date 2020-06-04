@@ -1,0 +1,53 @@
+Реализовать:
+1) доработать конструктор (возможно) и метод validate у класса Calculator. Метод validate должен говорить, является ли выражение переданное в конструкторе вычислимым, что означает:
+  1.1) у выражения правильный баланс скобок
+  1.2) можно построить граф вычисления выражения
+  1.2) выражение не содержит запрещённые операции (в нашем случае это только деление на 0)
+2) магический метод __str__ у класса Calculator
+
+Проверки:
+
+
+1) 
+validate_check_list = [
+	('a+2', True),
+	('a-(-2)', True),
+	('a+2-', False),
+	('a+(2+(3+5)', False),
+	('a^2', True),
+	('a^(-2), True),
+	('-a-2', True),
+	('6/0', False),
+	('a/(b-b), True), # мы же не знаем, что b-b это 0, увы
+]
+
+for case, exp in validate_check_list:
+    tokens = list(case)
+
+    calc = Calculator(tokens).validate()
+	
+	if calc != exp:
+		print(f'Error in case for "{case}". Actual "{calc}", expected {exp}')
+
+2) 
+str_check_list = [
+	("a", "a"),
+	("-a", "a-"),
+	("(a*(b/c)+((d-f)/k))", "abc/*df-k/+"),
+	("(a)", "a"),
+	("a*(b+c)", "abc+*"),
+	("(a*(b/c)+((d-f)/k))*(h*(g-r))", "abc/*df-k/+hgr-**"),
+	("(x*y)/(j*z)+g", "xy*jz*/g+"),
+	("a-(b+c)", "abc+-"),
+	("a/(b+c)", "abc+/"),
+	("a^(b+c)", "abc+^"),
+]
+
+for case, exp in str_check_list:
+    tokens = list(case)
+    calc = Calculator(tokens)
+	
+	if str(calc) != exp:
+		print(f'Error in case for "{case}". Actual "{calc}", expected {exp}')
+
+'''

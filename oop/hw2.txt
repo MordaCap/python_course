@@ -1,0 +1,79 @@
+'''
+hw2
+Реализовать оптимизаторы DoubleNegativeOptimiser, IntegerCostantsOptimiser, SimplifierOptimiser
+
+Имеется ввиду переорпеделение методов pre_process, process_internal и post_process
+    у классов DoubleNegativeOptimiser, IntegerCostantsOptimiser и UnnecessaryOperationsOptimiser
+    (первый и последний можно реализовать в базовом классе)
+
+Например, метод pre_process может принимать на вход инфиксное выражение и возвращать граф вычислений, метод process_internal - оптимизировать этот граф и метод post_process - превращать граф вычислений в постфиксную запись выражений
+
+
+
+
+double_negate_tests = [
+	('-(-var)', 'a'),
+	('-(-5)', '5'),
+	('-(a+b)+c-(-d)', 'ab+-c+d+'),
+]
+
+for case, exp in double_negate_tests:
+	tokens = list(case)
+	calc = Calculator(tokens, [DoubleNegativeOptimiser()])
+	calc.optimise()
+	
+	if str(calc) != exp:
+		print(f'Error in case for "{case}". Actual "{calc}", expected {exp}')
+
+
+# test cases помеченные (*) не обязательны к прохождению. 
+integer_constant_optimiser_tests = [
+	(['1'], ['1']),
+	(['1', '+', '2'], ['3']),
+	(['1', '-', '2'], ['1-']),
+	(['2', '*', '2'], ['4']),
+	(['2', '/', '2'], ['4']),
+	(['2', '^', '10'], ['1024']),
+	(['a', '+', '2', '*', '4'], ['a8+', '8a+']),
+	
+	(['2', '+', 'a', '+', '3'], ['5a+', 'a5+']),    # (*)
+]
+
+for case, exp in integer_constant_optimiser_tests:
+	calc = Calculator(case, [DoubleNegativeOptimiser(), IntegerCostantsOptimiser()])
+
+	calc.optimise()
+	
+	if str(calc) not in exp:
+		print(f'Error in case for "{case}". Actual "{calc}", expected one of {exp}')
+
+
+# test cases помеченные (*) не обязательны к прохождению. 
+simplifier_optimiser_test = [
+	('a+0', ['a']),
+	('a*1', ['a']),
+	('a*0', ['0']),
+	('b/b', ['1']),
+	('a-a', ['0']),
+	('a+(b-b)', ['a']),
+	('a+(7-6-1)', ['a']),
+	('a^0', ['1']),
+	('a-(-(-a))', ['0']),
+
+	('a+a+a', ['a3*', '3a*']), # (*)
+	('(a-b)-(a-b)', ['0']), # (*)
+	('(a-b)/(a-b)', ['1']), # (*)
+	('(a+b)+(a+b)', ['ab+2*', '2ab+*']), # (*)
+	('a*b+a*b', ['2ab**', '2ba**', 'a2b**', 'ab2**', 'b2a**', 'ba2**']), # (*)
+]
+
+for case, exps in simplifier_optimiser_test:
+    tokens = list(case)
+	calc = Calculator(tokens, [DoubleNegativeOptimiser(), IntegerCostantsOptimiser(), SimplifierOptimiser()])
+	
+	calc.optimise()
+
+	if str(calc) not in exps:
+	    print(f'Error in case for "{case}". Actual "{calc}", expected one of {exps}')
+
+'''
